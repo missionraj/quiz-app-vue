@@ -1,33 +1,52 @@
 <template>
-    <div class="wrapper" >
+    <form class="wrapper" @submit.prevent="submitAnswer">
         <div class="question">
-            <p> This is Questions </p>
-            <form action="">
-                <div class="option">
-                    <input type="radio" id="option1" name="option" value="a">
-                    <label for="option1"> option 1</label>
-                </div>
-                <div class="option" >
-                    <input type="radio" id="option2" name="option" value="b">
-                    <label for="option2"> option 2</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="option3" name="option" value="c">
-                    <label for="option3"> option 3</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="option4" name="option" value="d">
-                    <label for="option4"> option 4</label>
-                </div>
-            </form>
+            <h4> {{ selectedQuestion.question }} </h4>
+            <div class="option" v-for="(item,index) in selectedQuestion.options" :key="index">
+                <input type="radio" :id="`option${index}`" name="option" value="a" @change.prevent="selectOption(item)">
+                <label :for="`option${index}`"> {{ item }} </label>
+            </div>            
         </div>
-        <div class="btn"> this submit button</div>
-    </div>
+        <button type="submit" class="btn" > submit </button>
+    </form>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+
+interface Question { 
+    question:string;
+    options:string[];
+    correctAnswer:string;
+}
+
+const props =  defineProps<{ questions: Array<Question> }>()
+const emit = defineEmits<{
+  (e: 'selected', option:boolean ): void
+}>()
+const questionNo = ref(0);
 
 
+const selectedQuestion = ref(props.questions[questionNo.value]);
+
+const selctedOption = ref("");
+
+const submitAnswer = () => {
+    if(selctedOption.value == selectedQuestion.value.correctAnswer) { 
+        emit("selected",true);
+    } else { 
+        emit("selected",false);
+    }
+    if (questionNo.value < props.questions.length) {
+        questionNo.value++;
+        selectedQuestion.value = props.questions[questionNo.value]   
+    }
+}
+
+const selectOption = (option:string) => { 
+    selctedOption.value = option;
+    
+} 
 </script>
 
 <style scoped>
@@ -42,7 +61,7 @@
 
 .question { 
     flex: 1;
-    text-align: center;
+    padding: 10px;
 }
 
 .option {
@@ -55,6 +74,7 @@
     border-bottom-right-radius: 10px;
     text-align: center;
     color: #fff;
+    cursor: pointer;
 }
 
 </style>

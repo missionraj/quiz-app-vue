@@ -1,12 +1,35 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import Quiz from "@/components/Quiz.vue"
+import Quiz from "@/components/Quiz.vue";
+import { ref } from "vue";
+const questions = ref([
+  {
+    "question":"what is the capital of india",
+    "options":["mumbai","delhi","ahmedabad","chennai"],
+    "correctAnswer":"delhi" 
+  },
+  {
+    "question":"what is the capital of nepal",
+    "options":["kathmandu","pokhra","baglung","butwal"],
+    "correctAnswer":"kathmandu" 
+  }
+])
+
+const score = ref(0);
+
+const updateScore = (e: boolean) => { 
+  console.log("update score ...", e);
+  if (e) {
+    score.value++;
+  }
+}
+
 </script>
 
 <template>
   <div class="container">
-    <Quiz />
+    <Quiz :questions="questions" @selected="updateScore"/>
   </div>
 </template>
 
