@@ -1,35 +1,15 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import Quiz from "@/components/Quiz.vue";
 import { ref } from "vue";
-const questions = ref([
-  {
-    "question":"what is the capital of india",
-    "options":["mumbai","delhi","ahmedabad","chennai"],
-    "correctAnswer":"delhi" 
-  },
-  {
-    "question":"what is the capital of nepal",
-    "options":["kathmandu","pokhra","baglung","butwal"],
-    "correctAnswer":"kathmandu" 
-  }
-])
+import QuizCard from "@/components/QuizCard.vue";
 
-const score = ref(0);
-
-const updateScore = (e: boolean) => { 
-  console.log("update score ...", e);
-  if (e) {
-    score.value++;
-  }
-}
 
 </script>
 
 <template>
   <div class="container">
-    <Quiz :questions="questions" @selected="updateScore"/>
+    <QuizCard />
   </div>
 </template>
 
@@ -46,10 +26,11 @@ body {
   font-family: 'Mukta', sans-serif;
   font-family: 'Roboto Slab', serif;
 }
+
 .container { 
-  background: #8e9eab;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #bdc3c7;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   height: 100vh;
 
@@ -57,4 +38,6 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+
 </style>
